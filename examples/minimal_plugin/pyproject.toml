@@ -1,0 +1,16 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "minimal-plugin"
+version = "0.1.0"
+description = "Minimal example plugin demonstrating Native Agents SDK"
+requires-python = ">=3.11"
+dependencies = ["nativeagents-sdk>=0.1"]
+
+[project.scripts]
+minimal-plugin = "minimal_plugin.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/minimal_plugin"]

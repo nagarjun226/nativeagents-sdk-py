@@ -1,0 +1,30 @@
+[
+  {
+    "description": "sequence 1 (no prev_hash)",
+    "input": {
+      "captured_at": "2024-01-01T00:00:00+00:00",
+      "event_type": "test.event",
+      "payload_json": "{\"key\":\"value\"}",
+      "plugin_name": "test-plugin",
+      "prev_hash": null,
+      "sequence": 1,
+      "session_id": "session-abc123",
+      "timestamp": "2024-01-01T00:00:00+00:00"
+    },
+    "expected_hash": "2e64a12b0e579df70c7295d846f98ad28c798d084e5f0f04ecd6b2282cfb382b"
+  },
+  {
+    "description": "sequence 2 (prev_hash set)",
+    "input": {
+      "captured_at": "2024-01-01T00:00:01+00:00",
+      "event_type": "test.event",
+      "payload_json": "{\"n\":2}",
+      "plugin_name": "test-plugin",
+      "prev_hash": "2e64a12b0e579df70c7295d846f98ad28c798d084e5f0f04ecd6b2282cfb382b",
+      "sequence": 2,
+      "session_id": "session-abc123",
+      "timestamp": "2024-01-01T00:00:01+00:00"
+    },
+    "expected_hash": "e22a7bf24a2cd0933b78a0b3a338683330e1376e461a86e6121b9b2dae031a24"
+  }
+]

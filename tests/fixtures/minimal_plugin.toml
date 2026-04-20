@@ -1,0 +1,11 @@
+schema_version = 1
+
+[plugin]
+name = "hello-plugin"
+version = "0.1.0"
+description = "A minimal test plugin"
+hooks = ["PreToolUse"]
+writes_audit_events = true
+owns_paths = ["plugins/hello-plugin/"]
+hook_module = "hello_plugin.hook"
+min_sdk_version = "0.1.0"

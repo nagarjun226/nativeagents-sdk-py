@@ -1,0 +1,7 @@
+schema_version = 1
+
+[plugin]
+name = "no-script-plugin"
+version = "0.1.0"
+description = "No hook script present"
+hooks = ["PreToolUse"]

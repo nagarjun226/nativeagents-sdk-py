@@ -1,0 +1,12 @@
+schema_version = 1
+
+[plugin]
+name = "minimal-plugin"
+version = "0.1.0"
+description = "Minimal example plugin for testing SDK"
+hooks = ["PreToolUse", "PostToolUse"]
+writes_audit_events = true
+owns_paths = ["plugins/minimal-plugin/"]
+hook_module = "minimal_plugin.hook"
+cli_entry = "minimal_plugin.cli:app"
+min_sdk_version = "0.1.0"

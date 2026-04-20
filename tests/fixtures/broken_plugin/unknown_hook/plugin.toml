@@ -1,0 +1,7 @@
+schema_version = 1
+
+[plugin]
+name = "bad-hooks-plugin"
+version = "0.1.0"
+description = "Declares a non-existent hook"
+hooks = ["NonExistentHook"]

@@ -1,0 +1,7 @@
+schema_version = 1
+
+[plugin]
+name = "audit"
+version = "0.1.0"
+description = "Has reserved name"
+hooks = ["PreToolUse"]
