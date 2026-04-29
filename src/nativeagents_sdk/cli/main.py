@@ -5,11 +5,30 @@ from __future__ import annotations
 import typer
 from rich.console import Console
 
+
+def _version_callback(value: bool) -> None:
+    if value:
+        from nativeagents_sdk.version import __version__
+
+        console.print(f"nativeagents-sdk {__version__}")
+        raise typer.Exit()
+
+
 app = typer.Typer(
     name="nativeagents-sdk",
     help="Native Agents SDK command-line tools.",
     no_args_is_help=True,
 )
+
+
+@app.callback()
+def _main(
+    version: bool = typer.Option(
+        False, "--version", "-V", callback=_version_callback, is_eager=True, help="Show version."
+    ),
+) -> None:
+    pass
+
 
 console = Console()
 err_console = Console(stderr=True)

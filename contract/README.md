@@ -20,6 +20,7 @@ is the reference implementation.
 | [09-cli-conventions.md](09-cli-conventions.md) | CLI naming and subcommand conventions |
 | [10-versioning.md](10-versioning.md) | Schema evolution and versioning rules |
 | [11-conformance.md](11-conformance.md) | Conformance harness checks and failure messages |
+| [12-policy.md](12-policy.md) | Policy rule format (YAML), match modes, evaluation |
 
 ## Open Questions
 

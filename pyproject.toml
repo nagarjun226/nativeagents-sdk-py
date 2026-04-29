@@ -12,15 +12,20 @@ requires-python = ">=3.11"
 authors = [
     { name = "Native Agents", email = "team@nativeagents.net" },
 ]
-keywords = ["claude", "agents", "plugins", "sdk", "ai"]
+keywords = ["claude", "claude-code", "agents", "plugins", "sdk", "ai", "llm", "hooks", "audit", "plugin-framework", "session-hooks"]
 classifiers = [
     "Development Status :: 3 - Alpha",
+    "Environment :: Console",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX :: Linux",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
     "Typing :: Typed",
 ]
 dependencies = [
@@ -35,7 +40,8 @@ dependencies = [
 [project.urls]
 Homepage = "https://github.com/nativeagents/nativeagents-sdk-py"
 Repository = "https://github.com/nativeagents/nativeagents-sdk-py"
-Issues = "https://github.com/nativeagents/nativeagents-sdk-py/issues"
+"Bug Tracker" = "https://github.com/nativeagents/nativeagents-sdk-py/issues"
+Changelog = "https://github.com/nativeagents/nativeagents-sdk-py/blob/main/CHANGELOG.md"
 
 [project.scripts]
 nativeagents-sdk = "nativeagents_sdk.cli.main:app"

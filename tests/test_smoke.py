@@ -6,7 +6,7 @@ import nativeagents_sdk
 def test_version_exists() -> None:
     assert hasattr(nativeagents_sdk, "__version__")
     assert isinstance(nativeagents_sdk.__version__, str)
-    assert nativeagents_sdk.__version__ == "0.1.0"
+    assert nativeagents_sdk.__version__ == "0.2.0"
 
 
 def test_import_paths() -> None:

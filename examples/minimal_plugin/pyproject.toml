@@ -14,3 +14,7 @@ minimal-plugin = "minimal_plugin.cli:app"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/minimal_plugin"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = ["--tb=short"]

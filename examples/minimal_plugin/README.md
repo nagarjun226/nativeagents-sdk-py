@@ -19,7 +19,7 @@ A one-liner is printed to stderr for each event so you can see it live in the Cl
 ```bash
 # From the repo root
 pip install nativeagents-sdk           # or: pip install -e .
-nativeagents install examples/minimal_plugin
+nativeagents-sdk validate-plugin examples/minimal_plugin  # verify conformance first
 ```
 
 After install, `~/.claude/settings.json` will contain hook entries that call the plugin for
@@ -29,8 +29,8 @@ session start — no restart required.
 ## Verify
 
 ```bash
-nativeagents conformance examples/minimal_plugin   # exit 0 = all checks pass
-nativeagents doctor minimal-plugin                 # prints health report
+nativeagents-sdk validate-plugin examples/minimal_plugin  # 6/6 checks, exit 0 = all pass
+nativeagents-sdk check-contract                           # doctor checks across all plugins
 ```
 
 ## Audit events
@@ -47,11 +47,9 @@ ORDER BY sequence;
 
 ## Uninstall
 
-```bash
-nativeagents uninstall minimal-plugin
-```
+Use `nativeagents_sdk.install.unregister_plugin("minimal-plugin")` programmatically,
+or delete the hook entries manually from `~/.claude/settings.json`.
 
-This removes the hook script and the `settings.json` entries.
 Your audit rows and any memory entries remain (user data is never deleted on uninstall).
 
 ## Structure

@@ -14,6 +14,7 @@ import os
 import re as _re
 import secrets
 import tempfile
+import warnings
 from pathlib import Path
 from typing import IO
 
@@ -187,6 +188,52 @@ def validate_plugin_name(name: str) -> str:
                 f"Reserved prefixes: {list(_RESERVED_PLUGIN_PREFIXES)}"
             )
     return name
+
+
+def deprecated_env_path(
+    legacy_var: str,
+    default: Path,
+    removal_version: str = "0.3.0",
+) -> Path:
+    """Return a path from a legacy env var, falling back to ``default``.
+
+    Plugins that previously used their own home-dir env vars (e.g.
+    ``AGENTAUDIT_HOME``, ``AGENTMEMORY_HOME``) should call this during
+    migration to honour existing installs while steering users toward
+    ``NATIVEAGENTS_HOME``.
+
+    Emits a ``DeprecationWarning`` whenever the legacy var is present,
+    directing users to unset it and rely on ``NATIVEAGENTS_HOME`` instead.
+    The warning is raised at the caller's stack frame (``stacklevel=2``).
+
+    Args:
+        legacy_var: Name of the deprecated environment variable.
+        default: The SDK-canonical path to use when the var is absent.
+        removal_version: SDK version at which the legacy var will be ignored.
+
+    Returns:
+        ``Path(os.environ[legacy_var])`` if set, else ``default``.
+
+    Example (in a plugin's config.py)::
+
+        from nativeagents_sdk.paths import deprecated_env_path, plugin_dir
+
+        def get_audit_home() -> Path:
+            return deprecated_env_path(
+                "AGENTAUDIT_HOME",
+                default=plugin_dir("agentaudit"),
+            )
+    """
+    val = os.environ.get(legacy_var)
+    if val:
+        warnings.warn(
+            f"{legacy_var} is deprecated and will be ignored in SDK v{removal_version}. "
+            f"Unset it and let NATIVEAGENTS_HOME control the layout instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return Path(val)
+    return default
 
 
 def _make_temp_file(directory: Path) -> tuple[Path, IO[bytes]]:

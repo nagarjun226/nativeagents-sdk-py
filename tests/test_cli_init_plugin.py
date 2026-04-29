@@ -54,7 +54,7 @@ def test_version_command(isolated_home):
     result = runner.invoke(app, ["version"])
     assert result.exit_code == 0
     assert "nativeagents-sdk" in result.output
-    assert "0.1.0" in result.output
+    assert "0.2.0" in result.output
 
 
 def test_hook_sh_is_executable(tmp_path, isolated_home):

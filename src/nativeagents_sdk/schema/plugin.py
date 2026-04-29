@@ -85,9 +85,7 @@ class PluginManifest(BaseModel):
             )
         for prefix in _RESERVED_PLUGIN_PREFIXES:
             if v.startswith(prefix):
-                raise ValueError(
-                    f"Plugin name {v!r} uses a reserved prefix {prefix!r}."
-                )
+                raise ValueError(f"Plugin name {v!r} uses a reserved prefix {prefix!r}.")
         return v
 
     @field_validator("version", "min_sdk_version", "max_sdk_version")

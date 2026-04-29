@@ -185,3 +185,43 @@ def test_reserved_prefixes_rejected():
     for name in reserved_prefix_names:
         with pytest.raises(ValueError, match="reserved prefix"):
             validate_plugin_name(name)
+
+
+# ---------------------------------------------------------------------------
+# deprecated_env_path (v0.2)
+# ---------------------------------------------------------------------------
+
+from nativeagents_sdk.paths import deprecated_env_path  # noqa: E402
+
+
+def test_deprecated_env_path_uses_legacy_var(tmp_path, monkeypatch):
+    """Returns Path from the legacy env var when set."""
+    legacy_dir = tmp_path / "legacy"
+    monkeypatch.setenv("MY_LEGACY_HOME", str(legacy_dir))
+    with pytest.warns(DeprecationWarning, match="MY_LEGACY_HOME"):
+        result = deprecated_env_path("MY_LEGACY_HOME", default=tmp_path / "default")
+    assert result == legacy_dir
+
+
+def test_deprecated_env_path_uses_default_when_absent(tmp_path, monkeypatch):
+    """Returns default when legacy var is absent."""
+    monkeypatch.delenv("MY_LEGACY_HOME", raising=False)
+    default = tmp_path / "sdk-canonical"
+    result = deprecated_env_path("MY_LEGACY_HOME", default=default)
+    assert result == default
+
+
+def test_deprecated_env_path_no_warning_when_absent(tmp_path, monkeypatch):
+    """No DeprecationWarning when legacy var is not set."""
+    monkeypatch.delenv("MY_LEGACY_HOME", raising=False)
+    import warnings
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("error")
+        deprecated_env_path("MY_LEGACY_HOME", default=tmp_path / "x")
+
+
+def test_deprecated_env_path_mentions_removal_version(tmp_path, monkeypatch):
+    monkeypatch.setenv("OLD_VAR", str(tmp_path))
+    with pytest.warns(DeprecationWarning, match="0.3.0"):
+        deprecated_env_path("OLD_VAR", default=tmp_path / "x", removal_version="0.3.0")

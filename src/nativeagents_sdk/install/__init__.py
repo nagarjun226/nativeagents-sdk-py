@@ -8,6 +8,11 @@ from nativeagents_sdk.install.register import (
     unregister_plugin,
     write_claude_settings,
 )
+from nativeagents_sdk.install.shims import (
+    shim_is_executable,
+    write_capture_shim,
+    write_decision_shim,
+)
 
 __all__ = [
     "register_plugin",
@@ -17,4 +22,8 @@ __all__ = [
     "write_claude_settings",
     "doctor",
     "DoctorReport",
+    # shim generation (v0.2)
+    "write_decision_shim",
+    "write_capture_shim",
+    "shim_is_executable",
 ]

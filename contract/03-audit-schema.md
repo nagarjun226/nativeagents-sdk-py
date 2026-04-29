@@ -39,6 +39,40 @@ row_hash = sha256(canonical.encode('utf-8')).hexdigest()
 - `row_hash` is always a 64-char SHA-256 hex string
 - No UPDATE or DELETE on `events` table is permitted
 
+## Plugin-specific chain specs (v0.2)
+
+Plugins that maintain their own hash-chained event tables (e.g. `agentaudit-cc`)
+may use a different set of hash fields, a different payload representation
+(e.g. SHA-256 digest instead of inline JSON), or a different genesis sentinel.
+
+The SDK exposes a primitive that supports this:
+
+```python
+from nativeagents_sdk.audit.chain import ChainSpec, compute_row_hash
+
+MY_SPEC = ChainSpec(
+    fields=("event_id", "session_id", "sequence",
+            "event_type", "source", "payload_sha256",
+            "prev_event_hash"),
+)
+
+row_hash = compute_row_hash(row_fields_dict, spec=MY_SPEC)
+```
+
+`SDK_CHAIN_SPEC` describes the shared audit store's algorithm (8 fields,
+inline `payload_json`, `prev_hash=None` for sequence 1).
+
+Each plugin defines its own `ChainSpec` locally.  The SDK does not validate
+or interpret plugin-defined specs — it only provides the `compute_row_hash`
+primitive so plugins do not need to reimplement SHA-256 canonical hashing.
+
+**Two-store model:** the SDK's shared `audit.db` uses `SDK_CHAIN_SPEC`.
+Plugins with richer event schemas (e.g. agentaudit's `events` table with
+`source`, `cwd`, `origin_json`) maintain a separate store using their own
+spec.  Both stores use the same `compute_row_hash` function; neither store's
+chain is compatible with the other's.
+
 ## See also
 
-`src/nativeagents_sdk/audit/ddl.sql` — canonical DDL
+`src/nativeagents_sdk/audit/ddl.sql` — canonical DDL  
+`src/nativeagents_sdk/audit/chain.py` — `ChainSpec`, `compute_row_hash`, `SDK_CHAIN_SPEC`
